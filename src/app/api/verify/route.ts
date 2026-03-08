@@ -79,20 +79,11 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Retrieve Records based on Scope
-    let events = [];
-    if (scope === "FULL") {
-        events = await prisma.employmentEvent.findMany({
-            where: { employeeHashedId: employee_hash_id },
-            orderBy: { attestedAt: "asc" }
-        });
-    } else {
-        // Handle other scopes in V2
-        events = await prisma.employmentEvent.findMany({
-            where: { employeeHashedId: employee_hash_id },
-            orderBy: { attestedAt: "asc" },
-            take: 1 // Example for SINGLE
-        });
-    }
+    const events = await prisma.employmentEvent.findMany({
+        where: { employeeHashedId: employee_hash_id },
+        orderBy: { attestedAt: "asc" },
+        ...(scope !== "FULL" ? { take: 1 } : {})
+    });
 
     // 4. Execute Real-Time Audit (Hash Chain Verification)
     const normalizedEvents = events.map(e => ({
