@@ -1,0 +1,118 @@
+[
+  {
+    "type": "EMPLOYER_REGISTERED",
+    "actor_type": "SYSTEM",
+    "actor_id": "65717c03-12ec-4d45-839a-34adc5b6bc7f",
+    "subject_type": "EMPLOYER",
+    "subject_id": "65717c03-12ec-4d45-839a-34adc5b6bc7f",
+    "payload": {
+      "employer_name": "XCorp",
+      "email": "jamesezekiel039@gmail.com",
+      "status": "PENDING"
+    },
+    "id": "dfc2fd43-acc8-4e0d-91d9-1676b8c5033e",
+    "created_at": "2026-03-07T16:51:31.789Z"
+  },
+  {
+    "type": "EMPLOYER_REGISTERED",
+    "actor_type": "SYSTEM",
+    "actor_id": "4c768305-9aa9-4689-ac36-6b0728b55425",
+    "subject_type": "EMPLOYER",
+    "subject_id": "4c768305-9aa9-4689-ac36-6b0728b55425",
+    "payload": {
+      "employer_name": "Xcorp",
+      "email": "jamesezekiel039@gmail.com",
+      "status": "PENDING"
+    },
+    "id": "ef0a8e43-8349-4c34-8bd4-2bcc08afc113",
+    "created_at": "2026-03-07T17:10:32.833Z"
+  },
+  {
+    "type": "EMPLOYMENT_EVENT_ATTESTED",
+    "actor_type": "EMPLOYER",
+    "actor_id": "4c768305-9aa9-4689-ac36-6b0728b55425",
+    "subject_type": "EVENT",
+    "subject_id": "de99d003-ed63-4810-9dc0-83649949a0e0",
+    "payload": {
+      "event_id": "de99d003-ed63-4810-9dc0-83649949a0e0",
+      "employer_name": "Xcorp",
+      "employer_email": "jamesezekiel039@gmail.com",
+      "employee_id": "ID-***ussy",
+      "atttestor_id": "4c768305-9aa9-4689-ac36-6b0728b55425"
+    },
+    "id": "ab2f2de6-4102-4b47-97f6-fd817ee1fdfc",
+    "created_at": "2026-03-07T20:14:25.283Z"
+  },
+  {
+    "type": "EMPLOYMENT_EVENT_ATTESTED",
+    "actor_type": "EMPLOYER",
+    "actor_id": "4c768305-9aa9-4689-ac36-6b0728b55425",
+    "subject_type": "EVENT",
+    "subject_id": "449ffc3e-0d39-4e0f-a718-143aea7ae9c3",
+    "payload": {
+      "event_id": "449ffc3e-0d39-4e0f-a718-143aea7ae9c3",
+      "employer_name": "Xcorp",
+      "employer_email": "jamesezekiel039@gmail.com",
+      "employee_id": "ID-***sein",
+      "atttestor_id": "4c768305-9aa9-4689-ac36-6b0728b55425"
+    },
+    "id": "b7b6e132-953e-4182-b21c-073450e3cc73",
+    "created_at": "2026-03-07T20:17:22.329Z"
+  },
+  {
+    "type": "EMPLOYER_REGISTERED",
+    "actor_type": "SYSTEM",
+    "actor_id": "20fb70b2-5256-44f4-9ddf-5a1d205719ed",
+    "subject_type": "EMPLOYER",
+    "subject_id": "20fb70b2-5256-44f4-9ddf-5a1d205719ed",
+    "payload": {
+      "employer_name": "Admin",
+      "email": "cod3.culture@gmail.com",
+      "status": "PENDING"
+    },
+    "id": "7b85fc4f-0a2f-408d-bd62-bed0624c6a98",
+    "created_at": "2026-03-08T04:01:54.326Z"
+  },
+  {
+    "type": "EMPLOYER_VERIFIED",
+    "actor_type": "ADMIN",
+    "actor_id": "20fb70b2-5256-44f4-9ddf-5a1d205719ed",
+    "subject_type": "EMPLOYER",
+    "subject_id": "20fb70b2-5256-44f4-9ddf-5a1d205719ed",
+    "payload": {
+      "email": "cod3.culture@gmail.com",
+      "employer_name": "Admin",
+      "new_status": "VERIFIED"
+    },
+    "id": "4a3551f4-a855-4702-910b-5598a50f9990",
+    "created_at": "2026-03-08T04:11:42.094Z"
+  },
+  {
+    "type": "EMPLOYER_VERIFIED",
+    "actor_type": "ADMIN",
+    "actor_id": "20fb70b2-5256-44f4-9ddf-5a1d205719ed",
+    "subject_type": "EMPLOYER",
+    "subject_id": "4c768305-9aa9-4689-ac36-6b0728b55425",
+    "payload": {
+      "email": "jamesezekiel039@gmail.com",
+      "employer_name": "Xcorp",
+      "new_status": "VERIFIED"
+    },
+    "id": "565144b2-9028-4f54-b996-3cfd1efabc4d",
+    "created_at": "2026-03-08T04:12:14.974Z"
+  },
+  {
+    "type": "EMPLOYER_VERIFIED",
+    "actor_type": "ADMIN",
+    "actor_id": "20fb70b2-5256-44f4-9ddf-5a1d205719ed",
+    "subject_type": "EMPLOYER",
+    "subject_id": "4c768305-9aa9-4689-ac36-6b0728b55425",
+    "payload": {
+      "email": "jamesezekiel039@gmail.com",
+      "employer_name": "Xcorp",
+      "new_status": "VERIFIED"
+    },
+    "id": "9a025b3c-4cf0-430d-93d1-5b005be8fc8a",
+    "created_at": "2026-03-08T04:15:07.492Z"
+  }
+]

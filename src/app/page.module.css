@@ -1,141 +1,261 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  background: white;
 }
 
 .main {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
 }
 
-.intro {
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 160px 0;
+  gap: 120px;
+}
+
+.heroContent {
+  flex: 1;
+  max-width: 680px;
+  animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.badge {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  border: 1px solid #e2e8f0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.title {
+  font-size: 4.5rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--slate);
+  margin-bottom: 32px;
+  letter-spacing: -0.04em;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: #64748b;
+  margin-bottom: 56px;
+  max-width: 560px;
+}
+
+.cta {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+
+.portalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.portalCard {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 32px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.025);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.portalCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  border-color: var(--gray-300);
+}
+
+.portalCard h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--slate);
+  margin: 0;
+}
+
+.portalCard p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #64748b;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.portalCard a {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.portalChoice {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.verifyLink {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.verifyLink a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.verifyLink a:hover {
+  text-decoration: underline;
+  transform: translateX(4px);
+}
+
+.heroVisual {
+  flex: 1;
+  max-width: 520px;
+}
+
+.nodeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+.node {
+  aspect-ratio: 1;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 20px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.node:hover {
+  background: white;
+  border-color: var(--muted-blue);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
-}
-
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--button-secondary-border);
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
+@media (max-width: 1200px) {
+  .hero {
+    gap: 80px;
   }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
+  
+  .title {
+    font-size: 3.5rem;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    padding: 100px 0;
+    text-align: center;
+    gap: 80px;
+  }
+  
+  .heroContent {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .heroVisual {
+    max-width: 480px;
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0;
+  }
+  
+  .title {
+    font-size: 3rem;
+  }
+  
+  .subtitle {
+    font-size: 1.125rem;
+  }
+  
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 64px 0;
+  }
+  
   .main {
-    padding: 48px 24px;
+    padding: 0 24px;
   }
-
-  .intro {
+  
+  .title {
+    font-size: 2.25rem;
+  }
+  
+  .cta {
+    flex-direction: column;
+    width: 100%;
     gap: 16px;
   }
 
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+  .portalGrid {
+    grid-template-columns: 1fr;
   }
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+  .portalChoice {
+    flex-direction: column;
+  }
+  
+  .cta button, .cta a {
+    width: 100%;
+  }
+  
+  .heroVisual {
+    max-width: 100%;
+  }
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+  .nodeGrid {
+    gap: 16px;
   }
 }

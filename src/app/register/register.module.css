@@ -1,0 +1,151 @@
+.page {
+  background: #f8fafc;
+  min-height: calc(100vh - 80px); /* Total minus header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.card {
+  background: white;
+  max-width: 640px;
+  width: 100%;
+  padding: 48px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 8px;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.info h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 12px;
+}
+
+.info p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list li {
+  font-size: 0.875rem;
+  color: #475569;
+  padding-left: 24px;
+  position: relative;
+}
+
+.list li::before {
+  content: "•";
+  color: var(--muted-blue);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.alert {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  border-radius: 12px;
+  color: #64748b;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.footer {
+  margin-top: 48px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.field input {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  color: var(--slate);
+  transition: all 0.2s ease;
+}
+
+.field input:focus {
+  outline: none;
+  background: white;
+  border-color: var(--muted-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.footer a {
+  color: var(--muted-blue);
+  text-decoration: none;
+  font-weight: 500;
+}

@@ -1,0 +1,166 @@
+.page {
+  background: white;
+}
+
+.main {
+  background: #f8fafc;
+  padding: 80px 0;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 840px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.header {
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.meta {
+  font-size: 0.9375rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.meta strong {
+  color: var(--muted-blue);
+  font-weight: 600;
+}
+
+.searchBar {
+  background: white;
+  border: 1px solid var(--gray-200);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  display: flex;
+  gap: 16px;
+  margin-bottom: 64px;
+}
+
+.input {
+  flex: 1;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 0 20px;
+  height: 56px;
+  font-size: 0.9375rem;
+  color: var(--slate);
+  font-family: inherit;
+  transition: all 0.2s ease;
+  min-width: 0;
+}
+
+.input:focus {
+  outline: none;
+  background: white;
+  border-color: var(--muted-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.results {
+  min-height: 200px;
+}
+
+.errorBox {
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #991b1b;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.resultsHeader {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.resultsHeader h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 4px;
+}
+
+.resultsHeader p {
+  color: #64748b;
+  font-size: 0.9375rem;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 100px 32px;
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.gateWrapper {
+  margin-top: 24px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 64px 0;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .searchBar {
+    flex-direction: column;
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .input {
+    height: 52px;
+    width: 100%;
+  }
+  
+  .resultsHeader {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .placeholder {
+    padding: 60px 20px;
+    font-size: 1rem;
+  }
+}

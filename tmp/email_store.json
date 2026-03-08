@@ -1,0 +1,41 @@
+{
+  "events": [
+    {
+      "type": "CONSENT_ISSUED",
+      "actor_type": "EMPLOYEE",
+      "actor_id": "emp_8829",
+      "subject_type": "EMPLOYEE",
+      "subject_id": "emp_8829",
+      "payload": {
+        "employee_id": "emp_8829",
+        "email": "test-employee@example.com"
+      },
+      "id": "52633085-38ef-4793-8c19-959c8cd08fa3",
+      "created_at": "2026-02-28T21:09:59.708Z"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "fafbd3f0-a32e-4964-b322-76ede080b37f",
+      "event_id": "52633085-38ef-4793-8c19-959c8cd08fa3",
+      "template_id": "TPL_CONSENT_ISSUED",
+      "to": "test-employee@example.com",
+      "status": "SENT",
+      "attempts": 1,
+      "last_error": null,
+      "created_at": "2026-02-28T21:09:59.716Z",
+      "sent_at": "2026-02-28T21:10:22.871Z",
+      "next_run_at": null
+    }
+  ],
+  "logs": [
+    {
+      "id": "1deea5f8-c4eb-4014-bb89-a3130ebc3e70",
+      "job_id": "fafbd3f0-a32e-4964-b322-76ede080b37f",
+      "provider": "resend",
+      "provider_message_id": "re_msg_xiehm",
+      "status": "SUCCESS",
+      "created_at": "2026-02-28T21:10:22.873Z"
+    }
+  ]
+}

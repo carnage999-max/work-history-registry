@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EmployerStatus {
+  PENDING
+  VERIFIED
+  SUSPENDED
+}
+
+model Employee {
+  id               String            @id @default(uuid())
+  email            String            @unique
+  passwordHash     String
+  hashedSsn        String            @unique // The Blind Index that links to EmploymentEvents
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  consents         Consent[]
+}
+
+model Employer {
+  id            String            @id @default(uuid())
+  name          String
+  email         String            @unique
+  passwordHash  String
+  status        EmployerStatus    @default(PENDING)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  attestations  EmploymentEvent[]
+}
+
+model EmploymentEvent {
+  id               String   @id @default(uuid())
+  employerId       String
+  employer         Employer @relation(fields: [employerId], references: [id])
+  employeeName     String
+  employeeHashedId String   // The secure lookup key (SHA-256 blind index)
+  employeeDisplayId String   // The masked/friendly identifier for display (e.g. ***-**-1234)
+  eventType        String   // HIRED, TERMINATED, PROMOTED
+  startDate        DateTime
+  endDate          DateTime?
+  rehireEligible   Boolean  @default(true)
+  attestedAt       DateTime @default(now())
+  recordHash       String   @unique // Cryptographic proof of this event
+}
+
+model Consent {
+  id               String   @id @default(uuid())
+  employeeId       String?
+  employee         Employee? @relation(fields: [employeeId], references: [id])
+  employeeHashedId String   // The Blind Index of the subject (for token-based lookup)
+  authorizedActor  String   // The organization allowed to view (e.g. 'ADMIN' or 'ANY')
+  scope            String    @default("FULL") // "FULL", "LAST_ONLY", "DATE_RANGE", or specific Event ID
+  expiresAt        DateTime
+  createdAt        DateTime @default(now())
+
+  @@unique([employeeHashedId, authorizedActor])
+}

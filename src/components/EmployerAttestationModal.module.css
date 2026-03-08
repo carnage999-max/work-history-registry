@@ -1,0 +1,203 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--white);
+  width: 100%;
+  max-width: 520px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: modalEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.header {
+  padding: 32px;
+  border-bottom: 1px solid var(--gray-100);
+  background: var(--gray-50);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--slate);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.body {
+  padding: 32px;
+}
+
+.text {
+  font-size: 1rem;
+  color: var(--graphite);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.legalNotice {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  padding: 20px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+.footer {
+  padding: 24px 32px;
+  background: var(--gray-50);
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  border-top: 1px solid var(--gray-100);
+}
+
+@media (max-width: 540px) {
+  .modal {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header, .body, .footer {
+    padding: 24px;
+  }
+  
+  .footer {
+    flex-direction: column;
+    padding: 16px 24px 24px;
+  }
+  
+  .footer button {
+    width: 100%;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+.field input, .field select {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-size: 1rem;
+  color: var(--slate);
+  transition: all 0.2s ease;
+}
+
+.field input:focus, .field select:focus {
+  outline: none;
+  border-color: var(--muted-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.labelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--gray-200);
+  color: var(--gray-600);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: help;
+  transition: all 0.2s ease;
+}
+
+.tooltip:hover {
+  background: var(--muted-blue);
+  color: white;
+}
+
+.tooltipText {
+  visibility: hidden;
+  width: 240px;
+  background-color: var(--slate);
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 10px 12px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -120px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  pointer-events: none;
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltipText::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--slate) transparent transparent transparent;
+}
