@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className={styles.brand}>
           <div className={styles.logo}>
             <Image 
-              src="/work-history-registry.png" 
+              src="/logo.png" 
               alt="Work History Registry Logo" 
               width={40} 
               height={40} 
@@ -49,8 +49,7 @@ export const Footer = () => {
         </div>
         
         <div className={styles.bottom}>
-          <p>© 2026 Work History Registry. All rights reserved. 
-          V-1.0-TS-JOSE3-256-Vercel.</p>
+          <p>© 2026 Work History Registry. All rights reserved.</p>
           <div className={styles.legalLinks}>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>

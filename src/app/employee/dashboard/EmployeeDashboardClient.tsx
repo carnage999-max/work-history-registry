@@ -21,6 +21,10 @@ export default function EmployeeDashboardClient({
   const [newToken, setNewToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("timeline");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [consentToDelete, setConsentToDelete] = useState<string | null>(null);
+  const [showTokenModal, setShowTokenModal] = useState(false);
+  const [tokenAcknowledged, setTokenAcknowledged] = useState(false);
   const { showToast } = useToast();
 
   const handleCreateToken = async () => {
@@ -46,6 +50,8 @@ export default function EmployeeDashboardClient({
             expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
             createdAt: new Date().toISOString()
         }, ...prev]);
+        setShowTokenModal(true);
+        setTokenAcknowledged(false);
         showToast("Access Token cryptographically signed.", "success");
       } else {
         showToast("Failed to generate token.", "error");
@@ -55,6 +61,31 @@ export default function EmployeeDashboardClient({
       showToast("Token generation network failure.", "error");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteConsent = async () => {
+    if (!consentToDelete) return;
+
+    try {
+      const res = await fetch("/api/employee/consent", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ consentId: consentToDelete }),
+      });
+
+      if (res.ok) {
+        setConsents(prev => prev.filter(c => c.id !== consentToDelete));
+        showToast("Consent revoked successfully.", "success");
+      } else {
+        showToast("Failed to revoke consent.", "error");
+      }
+    } catch (err) {
+      console.error("CONSENT_DELETION_FAILED", err);
+      showToast("Revocation network failure.", "error");
+    } finally {
+      setShowDeleteConfirm(false);
+      setConsentToDelete(null);
     }
   };
 
@@ -202,6 +233,51 @@ export default function EmployeeDashboardClient({
                         </div>
                       </div>
                     )}
+
+                    {showTokenModal && newToken && (
+                      <div className={styles.tokenModal}>
+                        <div className={styles.tokenModalContent}>
+                          <h3>Registry Access Token Generated</h3>
+                          <p>Your cryptographically signed token is ready. Copy it now—you won't be able to view it again.</p>
+                          <div className={styles.tokenContainer}>
+                            <code>{newToken}</code>
+                          </div>
+                          <div className={styles.acknowledgment}>
+                            <label>
+                              <input 
+                                type="checkbox" 
+                                checked={tokenAcknowledged}
+                                onChange={(e) => setTokenAcknowledged(e.target.checked)}
+                              />
+                              I understand this token provides access to my professional records and must be handled securely.
+                            </label>
+                          </div>
+                          <div className={styles.modalActions}>
+                            <button 
+                              className="secondary-button" 
+                              onClick={() => {
+                                setShowTokenModal(false);
+                                setNewToken(null);
+                              }}
+                            >
+                              Close
+                            </button>
+                            <button 
+                              className="auth-button" 
+                              disabled={!tokenAcknowledged}
+                              onClick={() => {
+                                navigator.clipboard.writeText(newToken);
+                                showToast("Token copied to clipboard.", "success");
+                                setShowTokenModal(false);
+                                setNewToken(null);
+                              }}
+                            >
+                              Copy & Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -225,6 +301,15 @@ export default function EmployeeDashboardClient({
                                     <div className={styles.consentId}>
                                         Consent ID: {c.id.slice(0, 8)}
                                     </div>
+                                    <button 
+                                        className={styles.deleteBtn}
+                                        onClick={() => {
+                                            setConsentToDelete(c.id);
+                                            setShowDeleteConfirm(true);
+                                        }}
+                                    >
+                                        Revoke Consent
+                                    </button>
                                 </div>
                             ))}
                         </div>
@@ -235,6 +320,48 @@ export default function EmployeeDashboardClient({
           </div>
         </div>
       </main>
+
+      {showDeleteConfirm && (
+        <div style={{
+          position: "fixed",
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: "rgba(15, 23, 42, 0.7)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 999
+        }}>
+          <div style={{
+            background: "white",
+            padding: "32px",
+            borderRadius: "12px",
+            maxWidth: "400px",
+            width: "90%",
+            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+          }}>
+            <h2 style={{ fontSize: "1.25rem", color: "var(--slate)", fontWeight: "700", marginBottom: "16px" }}>Revoke Consent</h2>
+            <p style={{ color: "var(--graphite)", fontSize: "0.9375rem", lineHeight: 1.6, marginBottom: "24px" }}>
+              Are you sure you want to revoke this consent? This will invalidate any associated access tokens and prevent further verifications using this consent.
+            </p>
+            <div style={{ display: "flex", justifyItems: "center", justifyContent: "flex-end", gap: "12px" }}>
+              <button 
+                onClick={() => setShowDeleteConfirm(false)}
+                className="secondary-button"
+                style={{ padding: "8px 16px" }}
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleDeleteConsent}
+                className="auth-button"
+                style={{ padding: "8px 16px" }}
+              >
+                Revoke
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className={styles.footer}>
         <div className={styles.container}>

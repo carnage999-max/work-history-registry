@@ -17,9 +17,11 @@ interface EmployersClientProps {
 export default function EmployersClient({ status, employerName, attestationCount, isAdmin }: EmployersClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [localCount, setLocalCount] = useState(attestationCount);
+  const [isAttesting, setIsAttesting] = useState(false);
   const { showToast } = useToast();
 
-  const handleAttest = async (data: { employeeName: string; employeeRegistryId: string; eventType: string }) => {
+  const handleAttest = async (data: { employeeName: string; employeeRegistryId: string; eventType: string; rehireEligible: boolean }) => {
+    setIsAttesting(true);
     try {
       const response = await fetch("/api/attest", {
         method: "POST",
@@ -28,6 +30,7 @@ export default function EmployersClient({ status, employerName, attestationCount
           employee_id: data.employeeRegistryId,
           employee_name: data.employeeName,
           event_type: data.eventType,
+          rehire_eligible: data.rehireEligible,
           employer_name: employerName,
         }),
       });
@@ -35,6 +38,7 @@ export default function EmployersClient({ status, employerName, attestationCount
       if (response.ok) {
         setLocalCount(prev => prev + 1);
         showToast("Registry record securely attested.", "success");
+        setIsModalOpen(false);
       } else {
         const result = await response.json();
         showToast(result.error || "Attestation failed.", "error");
@@ -43,7 +47,7 @@ export default function EmployersClient({ status, employerName, attestationCount
       console.error("ATTESTATION_FAILED", err);
       showToast("Attestation network failure.", "error");
     } finally {
-      setIsModalOpen(false);
+      setIsAttesting(false);
     }
   };
 
@@ -93,6 +97,14 @@ export default function EmployersClient({ status, employerName, attestationCount
           <div className={styles.grid}>
             <div className={styles.card}>
               <div className={styles.cardHeader}>
+                <h3>Attestation Management</h3>
+              </div>
+              <p>View and manage all employment event attestations you have created for employees.</p>
+              <Link href="/employers/attestations" className="secondary-button">View My Attestations</Link>
+            </div>
+
+            <div className={styles.card}>
+              <div className={styles.cardHeader}>
                 <h3>Employment Event Attestation</h3>
               </div>
               <p>Issue formal employment certificates for professional staff with direct, immutable Registry signatures and time-stamped proof of work history.</p>
@@ -130,6 +142,7 @@ export default function EmployersClient({ status, employerName, attestationCount
         onConfirm={handleAttest}
         onCancel={() => setIsModalOpen(false)}
         employerName={employerName}
+        isLoading={isAttesting}
       />
     </div>
   );

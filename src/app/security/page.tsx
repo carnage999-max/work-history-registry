@@ -39,15 +39,9 @@ export default function SecurityPage() {
         <section className={styles.section}>
           <h3 className={styles.heading}>API Security Gating</h3>
           <p className={styles.text}>
-            We enforce strict rate limiting on all verification endpoints. Each request is evaluated by the system's heuristic engine to identify and block brute-force attempts.
+            We enforce strict rate limiting on all verification endpoints. Each request is monitored to identify and block brute-force attempts.
           </p>
         </section>
-
-        <footer className={styles.footer}>
-          Security Audit Status: 2/28/2026 - COMPLIANT. 
-          Vercel-Optimized Infrastructure. 
-          WHR-1.0-TS-JOSE3-256.
-        </footer>
       </main>
     </div>
   );

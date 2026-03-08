@@ -94,8 +94,22 @@ export default function VerifyPage() {
             {errorStatus === 403 && (
               <div className={styles.gateWrapper}>
                 <ConsentGate 
-                  onAccept={() => {
-                    alert("Institutional consent workflow initiated. In a backend-integrated app, this would update the server state.");
+                  onAccept={async () => {
+                    try {
+                      const res = await fetch("/api/consent/grant", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ token }),
+                      });
+                      if (res.ok) {
+                        showToast("Consent granted. Re-verifying...", "success");
+                        handleVerify(); // Retry verification
+                      } else {
+                        showToast("Failed to grant consent.", "error");
+                      }
+                    } catch (err) {
+                      showToast("Consent grant failed.", "error");
+                    }
                   }}
                   title="Employee Consent Required"
                   description="A valid token was provided, but the employee has not yet authorized access for this specific inquiry."
@@ -109,7 +123,7 @@ export default function VerifyPage() {
               </div>
             )}
 
-            {data && (
+            {data && data.events.length > 0 && (
               <>
                 <div className={styles.resultsHeader}>
                   <h2>Timeline Analysis</h2>
@@ -123,6 +137,16 @@ export default function VerifyPage() {
                   }))} 
                 />
               </>
+            )}
+
+            {data && data.events.length === 0 && (
+              <div className={styles.noResults}>
+                <h2>Timeline Analysis</h2>
+                <p>No attested employment events found for this verification token.</p>
+                <p className={styles.neutralNote}>
+                  Employment history will appear here once employers attest to professional events.
+                </p>
+              </div>
             )}
             
             {!data && !errorStatus && !loading && (

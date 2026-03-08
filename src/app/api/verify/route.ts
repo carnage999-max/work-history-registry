@@ -3,6 +3,7 @@ import { verifyToken } from "@/lib/token";
 import prisma from "@/lib/prisma";
 import { computeHashChain } from "@/lib/hashchain";
 
+
 const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const MAX_REQUESTS = 10;
@@ -86,7 +87,7 @@ export async function POST(req: NextRequest) {
     });
 
     // 4. Execute Real-Time Audit (Hash Chain Verification)
-    const normalizedEvents = events.map(e => ({
+    const normalizedEvents = events.map((e: any) => ({
         id: e.id,
         employer_id: e.employerId,
         employee_hash_id: e.employeeHashedId,

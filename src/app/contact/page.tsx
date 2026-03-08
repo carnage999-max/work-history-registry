@@ -42,13 +42,12 @@ export default function ContactPage() {
   return (
     <div className={informationalStyles.page}>
       <main className={informationalStyles.container}>
-        <h1 className={informationalStyles.title}>Institutional Inquiries</h1>
+        <h1 className={informationalStyles.title}>Get in Touch</h1>
         
         <section className={informationalStyles.section}>
           <p className={informationalStyles.text}>
-            For institutional access requests, API technical support, 
-            or regulatory compliance inquiries, please utilize the secure 
-            communication channel below. 
+            Have questions about how the Registry works? Need technical help? 
+            Send us a message and we'll get back to you soon.
           </p>
         </section>
 
@@ -56,48 +55,48 @@ export default function ContactPage() {
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.grid}>
               <div className={styles.field}>
-                <label>Institutional Email</label>
+                <label>Your Email</label>
                 <input 
                   type="email" 
                   name="email"
                   required 
-                  placeholder="name@organization.gov" 
+                  placeholder="you@company.com" 
                 />
               </div>
               <div className={styles.field}>
-                <label>Organization Name</label>
+                <label>Your Organization</label>
                 <input 
                   type="text" 
                   name="organization"
                   required 
-                  placeholder="Organization Identifier" 
+                  placeholder="Company or Agency Name" 
                 />
               </div>
             </div>
             
             <div className={styles.field}>
-              <label>Inquiry Classification</label>
+              <label>What's This About?</label>
               <select 
                 name="classification" 
                 required 
                 className={styles.select}
               >
-                <option value="">Select Priority Level</option>
-                <option value="access">Access Calibration / Onboarding</option>
-                <option value="legal">Regulatory / Legal Affairs</option>
-                <option value="tech">API / Technical Infrastructure</option>
-                <option value="other">General Registry Support</option>
+                <option value="">Choose a topic</option>
+                <option value="access">Getting started</option>
+                <option value="legal">Legal or compliance</option>
+                <option value="tech">Technical support</option>
+                <option value="other">Something else</option>
               </select>
             </div>
 
             <div className={styles.field}>
-              <label>Communication Metadata</label>
+              <label>Your Message</label>
               <textarea 
                 name="message"
                 rows={5} 
                 required 
                 className={styles.textarea} 
-                placeholder="Detail your institutional requirement..."
+                placeholder="Tell us what you need..."
               ></textarea>
             </div>
 
@@ -108,29 +107,18 @@ export default function ContactPage() {
         ) : (
           <div className={styles.success}>
             <div className={styles.successIcon}>✓</div>
-            <h3>Inquiry Logged</h3>
+            <h3>Message Sent</h3>
             <p>
-              Your communication has been cryptographically recorded in our priority queue. 
-              A Registry representative will verify your organizational credentials and contact you via your institutional email.
+              Thanks for reaching out. We've received your message and will get back to you soon.
             </p>
             <button 
               className="secondary-button" 
               onClick={() => setSubmitted(false)}
             >
-              New Inquiry
+              Send Another Message
             </button>
           </div>
         )}
-
-        <div className={informationalStyles.auditLog}>
-          WHR_CONTACT_SURFACE_V1 [READY] 
-          SECURITY_LEVEL: INSTITUTIONAL-L4
-          ENCRYPTION: AES-256-GCM
-        </div>
-
-        <footer className={informationalStyles.footer}>
-          Official Registry Communications Bureau - Established 2026.
-        </footer>
       </main>
     </div>
   );

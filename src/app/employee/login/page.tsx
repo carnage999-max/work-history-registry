@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./login.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useToast } from "@/context/ToastContext";
+import { useAuth } from "@/context/AuthContext";
+import { PasswordField } from "@/components/PasswordField";
 
 export default function EmployeeLogin() {
   const [email, setEmail] = useState("");
@@ -14,6 +16,18 @@ export default function EmployeeLogin() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { showToast } = useToast();
+  const { user, loading: authLoading, refreshSession } = useAuth();
+
+  // redirect if already authenticated as anyone
+  useEffect(() => {
+    if (!authLoading && user) {
+      if (user.type === "employee") {
+        router.push("/employee/dashboard");
+      } else {
+        router.push("/employers");
+      }
+    }
+  }, [user, authLoading, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +42,8 @@ export default function EmployeeLogin() {
       });
 
       if (response.ok) {
-        showToast("Professional Vault Unsealed.", "success");
+        showToast("Login to Professional Vault Successful.", "success");
+        await refreshSession();
         router.push("/employee/dashboard");
       } else {
         setError("INVALID_CREDENTIALS");
@@ -78,19 +93,20 @@ export default function EmployeeLogin() {
               />
             </div>
 
-            <div className={styles.field}>
-              <label>Vault Password</label>
-              <input 
-                type="password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Minimum 12 characters recommended"
-                required
-              />
+            <PasswordField
+              label="Vault Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Minimum 12 characters recommended"
+              required
+            />
+
+            <div className={styles.forgotLink}>
+              <Link href="/employee/forgot">Forgot password?</Link>
             </div>
 
             <button type="submit" className="auth-button" disabled={loading}>
-              {loading ? "Verifying Vault..." : "Unseal My Professional Vault"}
+              {loading ? "Verifying Vault..." : "Login to My Professional Vault"}
             </button>
           </form>
 

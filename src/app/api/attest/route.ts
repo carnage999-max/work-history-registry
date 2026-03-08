@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { recordEvent } from "@/lib/email/enqueue";
 import prisma from "@/lib/prisma";
 import { verifyEmployerSession } from "@/lib/auth";
-import { hashSsn, generateRecordHash } from "@/lib/registry-crypto";
+import { hashIdentifier, generateRecordHash } from "@/lib/registry-crypto";
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,14 +30,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Capture attestation details from dynamic form
-    const { employee_id, employee_name, event_type } = await req.json();
+    const { employee_id, employee_name, event_type, rehire_eligible } = await req.json();
 
     if (!employee_id || !employee_name || !event_type) {
       return NextResponse.json({ error: "MISSING_DATA" }, { status: 400 });
     }
 
     // 1. Generate the Secure Hashed Identifier (Blind Index)
-    const employeeHashedId = hashSsn(employee_id);
+    const employeeHashedId = hashIdentifier(employee_id);
 
     // 2. Generate the institutional Display ID (Alias/Masked version)
     const employeeDisplayId = employee_id.length > 4 
@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
         employeeDisplayId,
         eventType: event_type,
         startDate: new Date(),
+        rehireEligible: rehire_eligible !== undefined ? rehire_eligible : true,
         recordHash: recordHash,
       }
     });

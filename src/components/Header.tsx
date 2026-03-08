@@ -30,7 +30,7 @@ export const Header = () => {
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
           <Image 
-            src="/work-history-registry.png" 
+            src="/logo.png" 
             alt="Work History Registry Logo" 
             width={48} 
             height={48} 
@@ -42,12 +42,17 @@ export const Header = () => {
         <nav className={styles.nav}>
           <Link href="/verify" className={pathname === '/verify' ? styles.active : ''}>Verify</Link>
           <Link href="/employers" className={pathname === '/employers' ? styles.active : ''}>Employers</Link>
+          {/* employee portal link for logged‑in employees */}
+          {user?.type === 'employee' && (
+            <Link href="/employee/dashboard" className={pathname.startsWith('/employee/dashboard') ? styles.active : ''}>My Vault</Link>
+          )}
+          {/* only show unauthenticated entry point */}
           {!user && (
             <Link href="/employee/dashboard" className={pathname === '/employee/dashboard' ? styles.active : ''}>Employees</Link>
           )}
           <Link href="/how-it-works" className={pathname === '/how-it-works' ? styles.active : ''}>How it works</Link>
-          {user && (
-            <Link href="/employers" className={styles.portalLink}>Institutional Portal</Link>
+          {user && user.type !== 'employee' && (
+            <Link href="/employers" className={styles.portalLink}>Employer Portal</Link>
           )}
         </nav>
 
@@ -55,15 +60,15 @@ export const Header = () => {
           {!user ? (
             <>
               <Link href="/login" className={styles.login}>Sign In</Link>
-              <Link href="/register" className={styles.register}>Institutional Access</Link>
+              <Link href="/register" className={styles.register}>Employer Sign Up</Link>
             </>
           ) : (
             <>
-              {(user.email === "nathan@membershipauto.com" || user.email === "cod3.culture@gmail.com") && (
+              {user.type === 'admin' && (
                 <Link href="/admin" className={styles.adminBtn}>Governance</Link>
               )}
               <span className={styles.userInfo}>
-                {user.name} <span className={styles.statusBadge}>{user.status}</span>
+                {user.name} {user.status && <span className={styles.statusBadge}>{user.status}</span>}
               </span>
               <button onClick={() => setShowSignoutConfirm(true)} className={styles.logoutButton}>Sign Out</button>
             </>
@@ -91,25 +96,28 @@ export const Header = () => {
             <nav className={styles.mobileNav}>
               <Link href="/verify" onClick={() => setIsOpen(false)}>Verify</Link>
               <Link href="/employers" onClick={() => setIsOpen(false)}>Employers</Link>
+              {user?.type === 'employee' && (
+                <Link href="/employee/dashboard" onClick={() => setIsOpen(false)}>My Vault</Link>
+              )}
               {!user && (
                 <Link href="/employee/dashboard" onClick={() => setIsOpen(false)}>Employees</Link>
               )}
               <Link href="/how-it-works" onClick={() => setIsOpen(false)}>How it works</Link>
-              {user && (
-                <Link href="/employers" onClick={() => setIsOpen(false)} className={styles.mobilePortalLink}>Institutional Portal</Link>
+              {user && user.type !== 'employee' && (
+                <Link href="/employers" onClick={() => setIsOpen(false)} className={styles.mobilePortalLink}>Employer Portal</Link>
               )}
               <div className={styles.mobileAuth}>
                 {!user ? (
                   <>
                     <Link href="/login" onClick={() => setIsOpen(false)} className={styles.mobileLogin}>Sign In</Link>
-                    <Link href="/register" onClick={() => setIsOpen(false)} className={styles.mobileRegister}>Institutional Access</Link>
+                    <Link href="/register" onClick={() => setIsOpen(false)} className={styles.mobileRegister}>Employer Sign Up</Link>
                   </>
                 ) : (
                   <>
                     <div className={styles.mobileUserInfo}>
-                       {user.name} ({user.status})
+                       {user.name} {user.status && `(${user.status})`}
                     </div>
-                    {(user.email === "nathan@membershipauto.com" || user.email === "cod3.culture@gmail.com") && (
+                    {user.type === 'admin' && (
                       <Link href="/admin" onClick={() => setIsOpen(false)} className={styles.mobileAdminBtn}>Governance Console</Link>
                     )}
                     <button onClick={() => setShowSignoutConfirm(true)} className={styles.mobileLogoutButton}>Sign Out</button>

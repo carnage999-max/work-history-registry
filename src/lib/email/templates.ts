@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+const APP_BASE_URL = process.env.APP_BASE_URL || "http://localhost:3000";
+const LOGO_URL = `${APP_BASE_URL}/logo.png`;
+
 export const TemplateIds = [
   "TPL_EMPLOYER_REGISTERED",
   "TPL_EMPLOYER_VERIFIED",
@@ -9,6 +12,7 @@ export const TemplateIds = [
   "TPL_CONSENT_ISSUED",
   "TPL_CONSENT_REVOKED",
   "TPL_CONTACT_INQUIRY",
+  "TPL_EMPLOYEE_PASSWORD_RESET",
   "TPL_EMPLOYER_WELCOME",
 ] as const;
 
@@ -41,8 +45,7 @@ const wrapEmailHtml = (body: string, previewText: string) => `
     .wrapper { width: 100%; table-layout: fixed; background-color: ${COLORS.gray50}; padding: 40px 0; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; border: 1px solid ${COLORS.gray200}; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
     .header { background-color: ${COLORS.slate}; padding: 32px; text-align: left; }
-    .logo-text { color: #ffffff; font-size: 20px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin: 0; }
-    .logo-text span { font-weight: 400; opacity: 0.7; }
+    .logo { width: 48px; height: 48px; margin-bottom: 16px; }
     .content { padding: 40px; }
     .footer { background-color: #ffffff; padding: 32px; border-top: 1px solid ${COLORS.gray200}; text-align: left; }
     .footer-text { font-size: 12px; color: ${COLORS.muted}; margin: 0; line-height: 1.5; }
@@ -58,7 +61,7 @@ const wrapEmailHtml = (body: string, previewText: string) => `
   <div class="wrapper">
     <div class="container">
       <div class="header">
-        <div class="logo-text">WORK<span>HISTORY</span></div>
+        <img src="${LOGO_URL}" alt="Work History Registry Logo" class="logo">
       </div>
       <div class="content">
         ${body}
@@ -199,8 +202,27 @@ export const EMAIL_TEMPLATES: Record<TemplateId, EmailTemplate<any>> = {
     `, "Authorization Revoked"),
     renderText: (v) => `Authorization for data access to records associated with unique ID ${v.employee_id} has been formally revoked.\n${EMAIL_FOOTER_TEXT}`,
   },
+  TPL_EMPLOYEE_PASSWORD_RESET: {
+    subject: () => "Password Reset Instructions",
+    schema: z.object({ email: z.string().email(), token: z.string() }),
+    renderHtml: (v: any) => wrapEmailHtml(`
+      <div class="badge">Security</div>
+      <h1>Password Reset Requested</h1>
+      <p>Someone requested a password reset for the following email address:</p>
+      <p><strong>${v.email}</strong></p>
+      <p>If this was you, click the link below to choose a new password. The link expires in one hour.</p>
+      <p><a href="${process.env.APP_BASE_URL}/employee/reset/${v.token}" class="button">Reset Password</a></p>
+      <p>If you did not request this, you can safely ignore this message.</p>
+    `, "Password Reset"),
+    renderText: (v: any) => `Password reset requested for ${v.email}.
+
+Visit ${process.env.APP_BASE_URL}/employee/reset/${v.token} to set a new password (expires in one hour).
+
+If you did not request this, ignore this email.
+    `,
+  },
   TPL_CONTACT_INQUIRY: {
-    subject: (v: any) => `Institutional Inquiry: ${v.classification.toUpperCase()} - ${v.organization}`,
+    subject: (v: any) => `New Contact Request: ${v.classification} from ${v.organization}`,
     schema: z.object({
       email: z.string().email(),
       organization: z.string(),
@@ -208,35 +230,35 @@ export const EMAIL_TEMPLATES: Record<TemplateId, EmailTemplate<any>> = {
       message: z.string(),
     }),
     renderHtml: (v: any) => wrapEmailHtml(`
-      <div class="badge">Inquiry</div>
-      <h1>New Institutional Inquiry</h1>
-      <p>A new institutional inquiry has been logged via the Registry Portal:</p>
+      <div class="badge">Contact Request</div>
+      <h1>New Message from Registry Portal</h1>
+      <p>You've received a contact message:</p>
       <table style="width:100%; border-collapse: collapse; margin-bottom: 24px;">
         <tr>
           <td style="padding: 12px; border: 1px solid ${COLORS.gray200}; font-weight: 700;">Organization</td>
           <td style="padding: 12px; border: 1px solid ${COLORS.gray200};">${v.organization}</td>
         </tr>
         <tr>
-          <td style="padding: 12px; border: 1px solid ${COLORS.gray200}; font-weight: 700;">Authorized Contact</td>
+          <td style="padding: 12px; border: 1px solid ${COLORS.gray200}; font-weight: 700;">Contact Email</td>
           <td style="padding: 12px; border: 1px solid ${COLORS.gray200};">${v.email}</td>
         </tr>
         <tr>
-          <td style="padding: 12px; border: 1px solid ${COLORS.gray200}; font-weight: 700;">Classification</td>
+          <td style="padding: 12px; border: 1px solid ${COLORS.gray200}; font-weight: 700;">Topic</td>
           <td style="padding: 12px; border: 1px solid ${COLORS.gray200};">${v.classification}</td>
         </tr>
       </table>
-      <p><strong>Message Metadata:</strong></p>
-      <div style="background-color: ${COLORS.gray50}; border-left: 4px solid ${COLORS.gray200}; padding: 20px; font-style: italic; color: ${COLORS.slate};">
+      <p><strong>Message:</strong></p>
+      <div style="background-color: ${COLORS.gray50}; border-left: 4px solid ${COLORS.gray200}; padding: 20px; color: ${COLORS.slate};">
         ${v.message}
       </div>
-    `, "New Inquiry"),
+    `, "Contact Request"),
     renderText: (v: any) => `
-      A new institutional inquiry has been logged via the Registry Portal:
+      You've received a contact message:
       Organization: ${v.organization}
-      Authorized Contact: ${v.email}
-      Classification: ${v.classification}
+      Contact Email: ${v.email}
+      Topic: ${v.classification}
       
-      Message Metadata:
+      Message:
       ${v.message}
       
       ${EMAIL_FOOTER_TEXT}

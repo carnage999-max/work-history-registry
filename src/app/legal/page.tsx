@@ -44,10 +44,6 @@ export default function LegalPage() {
             The Registry is a ledger of facts—attested by organizations and verifiable by anyone with the appropriate credentials.
           </p>
         </section>
-
-        <footer className={styles.footer}>
-          Registry Legal Affairs Bureau - WHR-v1-LEGAL (Feb 2026).
-        </footer>
       </main>
     </div>
   );

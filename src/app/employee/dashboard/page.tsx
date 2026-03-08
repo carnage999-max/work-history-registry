@@ -43,7 +43,7 @@ export default async function EmployeeDashboard() {
   return (
     <EmployeeDashboardClient 
       email={employee.email}
-      history={history.map(h => ({
+      history={history.map((h: any) => ({
         id: h.id,
         employerName: h.employer.name,
         eventType: h.eventType,

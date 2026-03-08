@@ -29,23 +29,23 @@ export default function HowItWorksPage() {
             </li>
             <li className={styles.listItem}>
               <div className={styles.listItemText}>
-                <strong>Immutable Log:</strong> Once recorded, events are immutable. Any amendment or dispute is recorded as a new linked event in the chain, preserving the historical provenance of the original record.
+                <strong>Permanent Record:</strong> Once recorded, employment events can't be deleted. If there's a mistake or dispute, it's recorded as a new entry, so everyone can see the full history.
               </div>
             </li>
           </ul>
         </section>
 
         <section className={styles.section}>
-          <h3 className={styles.heading}>Data Integrity & Provenance</h3>
+          <h3 className={styles.heading}>Verification & Proof</h3>
           <p className={styles.text}>
-            Each professional record is assigned a unique <span className={styles.highlight}>Record Hash</span>. 
-            Verification is completed by comparing the provided hash against the immutable registry log, 
-            ensuring that no tampering has occurred between the point of origin and the final verifier.
+            Each employment record gets a unique fingerprint (called a Record Hash). 
+            When someone verifies a record, we compare the provided hash against our registry 
+            to confirm it hasn't been changed since the employer recorded it.
           </p>
           <div className={styles.auditLog}>
             WHR_EVENT_V1_VERIFY [OK] 
             HASH: 49c9423c15bfe143546904f1c9be343fc8a4d94349b45eda1535ca3bfdfa72eb
-            PROVENANCE: SRC_INSTITUTIONAL_ATTESTOR_ID: 0x8829...
+            SOURCE: Employer ID 0x8829...
           </div>
         </section>
 

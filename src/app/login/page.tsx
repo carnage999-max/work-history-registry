@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
+import { PasswordField } from "@/components/PasswordField";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,7 +20,11 @@ export default function LoginPage() {
   // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && user) {
-      router.push("/employers");
+      if (user.type === "employee") {
+        router.push("/employee/dashboard");
+      } else {
+        router.push("/employers");
+      }
     }
   }, [user, authLoading, router]);
 
@@ -75,16 +80,13 @@ export default function LoginPage() {
                 required
               />
             </div>
-            <div className={styles.field}>
-              <label>Registry Key / Passcode</label>
-              <input 
-                type="password" 
-                placeholder="••••••••" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+            <PasswordField
+              label="Registry Key / Passcode"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+            />
             
             {error && (
               <div className={styles.statusBannerError}>

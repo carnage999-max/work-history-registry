@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import { hashSsn } from "@/lib/registry-crypto";
+import { hashIdentifier } from "@/lib/registry-crypto";
 import { createEmployeeSession } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, ssn } = await req.json();
+    const { name, email, password, ssn } = await req.json();
 
-    if (!email || !password || !ssn) {
+    if (!name || !email || !password || !ssn) {
       return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
     }
 
-    // 1. Generate the Blind Index (Hashed SSN)
-    const hashedSsn = hashSsn(ssn);
+    // 1. Generate the Blind Index (Hashed Identifier)
+    const hashedSsn = hashIdentifier(ssn);
 
     // 2. Check if identity already exists
     const existing = await prisma.employee.findUnique({
@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
     // 4. Create the Registry Subject identity
     const employee = await prisma.employee.create({
       data: {
+        name,
         email,
         passwordHash,
         hashedSsn,

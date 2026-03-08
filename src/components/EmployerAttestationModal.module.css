@@ -201,3 +201,130 @@
   border-style: solid;
   border-color: var(--slate) transparent transparent transparent;
 }
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--slate);
+  cursor: pointer;
+}
+
+.checkboxLabel input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.reviewBox {
+  background: #f8fafc;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.reviewBox h4 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin: 0 0 16px 0;
+}
+
+.reviewField {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 0.9375rem;
+}
+
+.reviewField:last-child {
+  border-bottom: none;
+}
+
+.reviewLabel {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.reviewValue {
+  color: var(--slate);
+  font-weight: 500;
+}
+
+.autocompleteContainer {
+  position: relative;
+  width: 100%;
+}
+
+.autocompleteContainer input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-size: 1rem;
+  color: var(--slate);
+  transition: all 0.2s ease;
+}
+
+.autocompleteContainer input:focus {
+  outline: none;
+  border-color: var(--muted-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--gray-50);
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background-color: var(--gray-50);
+}
+
+.itemName {
+  font-weight: 600;
+  color: var(--slate);
+  font-size: 0.9375rem;
+  margin-bottom: 2px;
+}
+
+.itemEmail {
+  font-size: 0.8125rem;
+  color: #64748b;
+}

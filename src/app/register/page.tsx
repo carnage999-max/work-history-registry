@@ -22,7 +22,11 @@ export default function RegisterPage() {
   // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && user) {
-      router.push("/employers");
+      if (user.type === "employee") {
+        router.push("/employee/dashboard");
+      } else {
+        router.push("/employers");
+      }
     }
   }, [user, authLoading, router]);
 

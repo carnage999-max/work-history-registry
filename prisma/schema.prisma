@@ -15,6 +15,7 @@ enum EmployerStatus {
 
 model Employee {
   id               String            @id @default(uuid())
+  name             String            // full legal name of the employee
   email            String            @unique
   passwordHash     String
   hashedSsn        String            @unique // The Blind Index that links to EmploymentEvents

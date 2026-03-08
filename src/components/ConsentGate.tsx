@@ -9,7 +9,7 @@ interface ConsentGateProps {
 export const ConsentGate = ({ 
   onAccept, 
   title = "Privacy & Data Consent", 
-  description = "A formal request for access to your work history records has been initiated. Review the scope of access below." 
+  description = "Someone is asking to see your work history. Review what they're asking to access below." 
 }: ConsentGateProps) => {
   return (
     <div className={styles.container}>

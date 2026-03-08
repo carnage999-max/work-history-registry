@@ -143,6 +143,12 @@ function getNotificationRecipients(event: DomainEvent): { to: string; templateId
         to: event.payload.email || "employer@example.com" 
       });
       break;
+    case "PASSWORD_RESET":
+      // send reset link to the employee
+      if (event.payload.email) {
+        recipients.push({ templateId: "TPL_EMPLOYEE_PASSWORD_RESET", to: event.payload.email });
+      }
+      break;
     case "CONTACT_INQUIRY":
       adminEmails.forEach(email => {
         recipients.push({ templateId: "TPL_CONTACT_INQUIRY", to: email.trim() });

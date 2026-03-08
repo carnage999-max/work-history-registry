@@ -11,5 +11,19 @@
       "status": "PENDING"
     },
     "created_at": "2026-03-08T04:01:56.385Z"
+  },
+  {
+    "id": "eb59594e-aeec-4098-9765-264db2dd28de",
+    "event_id": "466eb02a-6679-44e7-8470-a7cfed49dc3b",
+    "template_id": "TPL_EMPLOYER_WELCOME",
+    "to": "ezekielokebule@gmail.com",
+    "error": "Too many requests. You can only make 2 requests per second. See rate limit response headers for more information. Or contact support to increase rate limit.",
+    "payload": {
+      "employer_name": "Fawners",
+      "email": "ezekielokebule@gmail.com",
+      "status": "PENDING",
+      "is_admin_registration": false
+    },
+    "created_at": "2026-03-08T16:29:57.860Z"
   }
 ]
