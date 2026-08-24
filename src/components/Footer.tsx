@@ -55,6 +55,18 @@ export const Footer = () => {
             <Link href="/terms">Terms</Link>
           </div>
         </div>
+
+        <p className={styles.attribution}>
+          Part of the{" "}
+          <a
+            href="https://se7eninc.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Se7en
+          </a>{" "}
+          family of companies.
+        </p>
       </div>
     </footer>
   );

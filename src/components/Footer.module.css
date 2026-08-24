@@ -130,6 +130,25 @@
   color: #94a3b8;
 }
 
+.attribution {
+  grid-column: 1 / -1;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.attribution a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.attribution a:hover {
+  color: #94a3b8;
+}
+
 @media (max-width: 1080px) {
   .container {
     gap: 80px;
