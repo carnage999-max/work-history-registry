@@ -48,7 +48,7 @@ export default function RootLayout({
           </AuthProvider>
         </ToastProvider>
         <Script
-          src="https://now-hiring-eta.vercel.app/widget.js"
+          src="https://hiring.se7eninc.com/widget.js"
           data-icon="FileCheck"
           strategy="afterInteractive"
         />
